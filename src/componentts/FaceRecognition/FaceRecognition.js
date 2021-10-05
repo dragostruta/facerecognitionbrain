@@ -1,5 +1,33 @@
-const FaceRecognition = () => {
-  return <div>{"Dragos, your current rank is idiot"}</div>;
+import "./FaceRecognition.css";
+
+const FaceRecognition = ({ imageUrl, box }) => {
+  console.log(box);
+  return (
+    <div className="center ma">
+      {imageUrl.length > 0 ? (
+        <div className="absolute mt2">
+          <img
+            id="inputimage"
+            alt="image"
+            src={imageUrl}
+            width="500px"
+            height="auto"
+          />
+          <div
+            className="bounding-box"
+            style={{
+              top: box.topRow,
+              right: box.rightCol,
+              bottom: box.bottomRow,
+              left: box.leftCol,
+            }}
+          ></div>
+        </div>
+      ) : (
+        <> </>
+      )}
+    </div>
+  );
 };
 
 export default FaceRecognition;

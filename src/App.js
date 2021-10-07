@@ -1,15 +1,18 @@
 import "./App.css";
 import Navigation from "./componentts/Navigation/Navigation";
-import Logo from "./componentts/Logo/Logo";
 import ImageLinkForm from "./componentts/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./componentts/FaceRecognition/FaceRecognition";
 import { useState } from "react";
 import Clarifai from "clarifai";
+import Signin from "./componentts/Signin/Signin";
+import Register from "./componentts/Register/Register";
 
 const App = () => {
   const [input, setInput] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [box, setBox] = useState({});
+  const [route, setRoute] = useState("signin");
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   const raw = JSON.stringify({
     user_app_id: {
@@ -71,12 +74,28 @@ const App = () => {
       .catch((error) => console.log("error", error));
   };
 
+  const onRouteChange = (route) => {
+    if (route === "signin" || route === "register") {
+      setIsSignedIn(false);
+    } else if (route == "home") {
+      setIsSignedIn(true);
+    }
+    setRoute(route);
+  };
+
   return (
     <div className="App">
-      <Navigation />
-      <Logo />
-      <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
-      <FaceRecognition box={box} imageUrl={imageUrl} />
+      <Navigation isSignedIn={isSignedIn} onRouteChange={onRouteChange} />
+      {route === "home" ? (
+        <div>
+          <ImageLinkForm onInputChange={onInputChange} onSubmit={onSubmit} />
+          <FaceRecognition box={box} imageUrl={imageUrl} />{" "}
+        </div>
+      ) : route === "signin" ? (
+        <Signin onRouteChange={onRouteChange} />
+      ) : (
+        <Register onRouteChange={onRouteChange} />
+      )}
     </div>
   );
 };

@@ -2,7 +2,7 @@ import "./App.css";
 import Navigation from "./componentts/Navigation/Navigation";
 import ImageLinkForm from "./componentts/ImageLinkForm/ImageLinkForm";
 import FaceRecognition from "./componentts/FaceRecognition/FaceRecognition";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Clarifai from "clarifai";
 import Signin from "./componentts/Signin/Signin";
 import Register from "./componentts/Register/Register";
@@ -77,7 +77,7 @@ const App = () => {
   const onRouteChange = (route) => {
     if (route === "signin" || route === "register") {
       setIsSignedIn(false);
-    } else if (route == "home") {
+    } else if (route === "home") {
       setIsSignedIn(true);
     }
     setRoute(route);
